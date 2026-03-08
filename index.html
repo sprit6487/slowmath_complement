@@ -325,6 +325,7 @@
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 12px; width: 100%; max-width: 280px;
     margin-top: 20px;
+    position: relative;
   }
   .choice-btn {
     padding: 18px;
@@ -345,10 +346,15 @@
     color: var(--app-red); animation: shake 0.4s ease;
   }
   .choice-btn:disabled { pointer-events: none; opacity: 0.4; }
-  .choices-grid.chips-hidden { display: none; }
+  .choices-grid.chips-hidden .choice-btn { visibility: hidden; }
   .choices-grid.chips-locked .choice-btn { pointer-events: none; opacity: 0.4; }
 
-  /* Reveal button */
+  /* Reveal button - overlays on hidden choices */
+  .reveal-btn-wrap {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 5;
+  }
   .reveal-btn {
     padding: 12px 28px;
     border: 2px solid #C4AA82; border-radius: 14px;
@@ -356,7 +362,6 @@
     font-size: 0.95rem; font-weight: 700;
     color: #7B6545;
     cursor: pointer; font-family: inherit;
-    margin-top: 8px;
   }
 
   /* Impulse message */
@@ -986,14 +991,17 @@ function nextQuiz() {
   if (settings.impulse) {
     if (settings.impulseMode === 'hide') {
       grid.classList.add('chips-hidden');
+      const wrap = document.createElement('div');
+      wrap.className = 'reveal-btn-wrap';
       const revealBtn = document.createElement('button');
       revealBtn.className = 'reveal-btn';
       revealBtn.textContent = '👀 보기 확인';
       revealBtn.addEventListener('click', () => {
         grid.classList.remove('chips-hidden');
-        revealBtn.remove();
+        wrap.remove();
       });
-      grid.after(revealBtn);
+      wrap.appendChild(revealBtn);
+      grid.appendChild(wrap);
     } else {
       grid.classList.add('chips-locked');
       grid.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
