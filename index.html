@@ -336,6 +336,8 @@
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 10px; width: 100%; max-width: 340px;
   }
+  .pair-grid.cols-5 { grid-template-columns: repeat(5, 1fr); max-width: 380px; }
+  .pair-grid.cols-6 { grid-template-columns: repeat(6, 1fr); max-width: 420px; }
   .pair-cell {
     aspect-ratio: 1;
     border: 3px solid var(--warm-200);
@@ -349,6 +351,8 @@
     font-family: inherit;
     position: relative;
   }
+  .pair-grid.cols-5 .pair-cell { font-size: 1.4rem; border-width: 2.5px; }
+  .pair-grid.cols-6 .pair-cell { font-size: 1.15rem; border-width: 2px; border-radius: 12px; }
   .pair-cell:active { transform: scale(0.95); }
   .pair-cell.selected {
     border-color: var(--app-blue); background: var(--app-blue-soft);
@@ -424,11 +428,15 @@
     0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); }
   }
 
+  /* Wider game container for large grids */
+  .game-container.wide { max-width: 520px; }
+
   /* Desktop */
   @media (min-width: 560px) {
     #start-view, #play-view { max-width: 560px; padding: 44px 40px; }
     .question-number { font-size: 5.5rem; }
     .choice-btn { font-size: 2.5rem; }
+    .pair-grid.cols-6 { max-width: 480px; }
   }
 </style>
 </head>
@@ -475,7 +483,9 @@
       1&nbsp;&nbsp;9&nbsp;&nbsp;→&nbsp;&nbsp;10 ✓
     </div>
     <div class="mode-btns">
-      <button class="start-btn" onclick="startGame('pair')">시작하기</button>
+      <button class="start-btn" onclick="startGame('pair',10)">10개</button>
+      <button class="start-btn" onclick="startGame('pair',20)">20개</button>
+      <button class="start-btn" onclick="startGame('pair',30)">30개</button>
     </div>
   </div>
 
@@ -532,6 +542,7 @@
 const STORAGE_KEY = 'slowmath_complement_settings';
 let settings = loadSettings();
 let currentMode = '';
+let pairCount = 10;
 let score = 0;
 let combo = 0;
 let questionNum = 0;
@@ -624,8 +635,9 @@ function goHome() {
   renderSettingsUI();
 }
 
-function startGame(mode) {
+function startGame(mode, count) {
   currentMode = mode;
+  if (count) pairCount = count;
   score = 0; combo = 0; questionNum = 0;
   document.getElementById('start-view').style.display = 'none';
   document.getElementById('play-view').style.display = 'flex';
@@ -633,7 +645,7 @@ function startGame(mode) {
   const titles = {
     'quiz-circles': '보수 찾기 (원)',
     'quiz-plain': '보수 찾기',
-    'pair': '짝 맞추기'
+    'pair': '짝 맞추기 (' + pairCount + '개)'
   };
   document.getElementById('play-title').textContent = titles[mode];
   updateScoreUI();
@@ -772,11 +784,26 @@ function nextQuiz() {
 }
 
 // ===== Pair Mode =====
+function generatePairs(totalNumbers) {
+  // totalNumbers must be even; each pair sums to 10
+  const allPairs = [[1,9],[2,8],[3,7],[4,6],[5,5]];
+  const numPairs = totalNumbers / 2;
+  const result = [];
+  for (let i = 0; i < numPairs; i++) {
+    result.push([...allPairs[i % allPairs.length]]);
+  }
+  return result;
+}
+
 function startPair() {
   locked = false;
-  const basePairs = [[1,9],[2,8],[3,7],[4,6]];
-  const pairs = shuffle(basePairs);
+  const pairs = generatePairs(pairCount);
   const numbers = shuffle(pairs.flat());
+
+  // Grid columns based on count
+  let colsClass = '';
+  if (pairCount === 20) colsClass = 'cols-5';
+  else if (pairCount === 30) colsClass = 'cols-6';
 
   let selected = null;
   let matchedIndices = new Set();
@@ -789,7 +816,7 @@ function startPair() {
     const gc = document.getElementById('game-container');
     gc.innerHTML = `
       <div class="pair-info">더해서 <strong>10</strong>이 되는 두 수를 골라주세요</div>
-      <div class="pair-grid">
+      <div class="pair-grid ${colsClass}">
         ${numbers.map((n, i) => {
           let cls = 'pair-cell';
           if (matchedIndices.has(i)) cls += ' matched';
