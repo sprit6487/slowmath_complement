@@ -12,55 +12,57 @@
     --warm-50: #FDFCFA; --warm-100: #FAF7F2; --warm-200: #F3EDE4;
     --warm-300: #E0D5C5; --warm-400: #B8AD9E; --warm-500: #8C7E6A;
     --warm-600: #6B5F50; --warm-700: #4A4035; --warm-800: #2E261D;
-    --border: #E8E2DA;
+    --border: #E8E2DA; --border-light: #F0ECE6;
     --app-blue: #6BADE8; --app-blue-light: #D9EDFC; --app-blue-soft: #EEF6FD;
     --app-orange: #F0A050; --app-orange-light: #FDE8C8; --app-orange-soft: #FFF6EB;
     --app-green: #5BC886; --app-green-light: #D4F5E0;
     --app-red: #F07070; --app-red-light: #FDE8E8;
+    --title-blue: #2E7FD9; --title-orange: #F0901E;
     --bg: #F5F1EB;
-    --radius: 16px;
-    --radius-lg: 32px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Noto Sans KR', sans-serif;
     background: var(--bg);
     min-height: 100vh; min-height: 100dvh;
-    display: flex; flex-direction: column; align-items: center;
+    display: flex; justify-content: center; align-items: flex-start;
     color: var(--warm-700);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
   .hidden { display: none !important; }
 
-  /* ===== Login View ===== */
-  #login-view {
+  /* App wrapper */
+  .app {
     width: 100%; max-width: 480px;
+    min-height: 100dvh;
+    background: #fff;
+    padding: 24px 20px;
+    padding-top: max(24px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
     display: flex; flex-direction: column; align-items: center;
-    justify-content: center;
+    position: relative;
+  }
+
+  /* ===== Login View ===== */
+  .login-view {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     flex: 1; min-height: 100dvh;
     padding: 40px 20px;
+    width: 100%;
   }
   .login-logo-area {
-    text-align: center;
-    margin-bottom: 48px;
+    text-align: center; margin-bottom: 48px;
   }
-  .login-logo-area .turtle-logo {
-    font-size: 4rem;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
+  .login-logo-area .turtle-svg { margin-bottom: 8px; }
   .login-logo-area h1 {
     font-size: 1.875rem; font-weight: 900;
-    letter-spacing: -0.025em;
-    color: var(--warm-800);
-    margin-top: 8px;
+    letter-spacing: -0.025em; margin-top: 8px;
   }
   .login-subtitle {
     color: var(--warm-400);
-    font-size: 0.9375rem; font-weight: 500;
-    margin-top: 6px;
+    font-size: 0.9375rem; margin-top: 4px;
   }
   .login-buttons {
     width: 100%; max-width: 320px;
@@ -68,25 +70,23 @@
   }
   .login-btn {
     display: flex; align-items: center; justify-content: center;
-    gap: 8px;
-    width: 100%; padding: 14px;
-    border: none; border-radius: 12px;
+    gap: 10px; width: 100%; padding: 14px 20px;
+    border-radius: 12px; border: none;
     font-size: 0.9375rem; font-weight: 600;
-    font-family: inherit;
+    font-family: 'Noto Sans KR', sans-serif;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: transform 0.1s, opacity 0.15s;
   }
-  .login-btn:active { opacity: 0.8; }
+  .login-btn:active { transform: scale(0.97); }
+  .login-btn svg { flex-shrink: 0; }
   .login-btn.kakao { background: #FEE500; color: #191919; }
   .login-btn.naver { background: #03C75A; color: #fff; }
   .login-btn.google { background: #fff; color: #444; border: 1.5px solid #DADCE0; }
   .login-btn.facebook { background: #1877F2; color: #fff; }
   .login-divider {
     display: flex; align-items: center; gap: 12px;
-    width: 100%; max-width: 320px;
-    margin: 16px 0 4px;
-    color: var(--warm-400);
-    font-size: 0.8rem;
+    width: 100%; max-width: 320px; margin: 16px 0 4px;
+    color: var(--warm-400); font-size: 0.8rem;
   }
   .login-divider::before, .login-divider::after {
     content: ''; flex: 1; height: 1px; background: var(--warm-300);
@@ -98,64 +98,51 @@
 
   /* ===== Start View ===== */
   #start-view {
-    width: 100%; max-width: 480px;
-    padding: 24px 20px;
-    display: flex; flex-direction: column; align-items: center;
+    width: 100%; display: flex;
+    flex-direction: column; align-items: center;
   }
-
   .brand {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 2px;
   }
-  .brand .turtle-icon { font-size: 2.2rem; }
   .brand h1 {
-    font-size: 1.875rem; font-weight: 900;
+    font-size: 1.5rem; font-weight: 900;
     letter-spacing: -0.025em;
-    color: var(--warm-800);
   }
   .brand-sub {
-    font-size: 0.85rem; color: var(--warm-400);
+    font-size: 0.8rem; color: var(--warm-400);
     margin-bottom: 24px; font-weight: 500;
   }
 
   /* Mode Cards */
   .mode-card {
     background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px 20px; width: 100%;
-    margin-bottom: 14px; text-align: center;
+    border-radius: 24px;
+    padding: 20px 18px; width: 100%;
+    margin-bottom: 12px; text-align: center;
     transition: transform 0.12s, box-shadow 0.12s;
-    cursor: default;
   }
-  .mode-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .mode-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
   .mode-card:active { transform: scale(0.98); }
   .mode-card h2 {
-    font-size: 1.1rem; font-weight: 700; color: var(--warm-700);
+    font-size: 1.05rem; font-weight: 700; color: var(--warm-700);
     margin-bottom: 4px;
   }
   .mode-card .desc {
-    font-size: 0.8rem; color: var(--warm-400); margin-bottom: 16px;
+    font-size: 0.75rem; color: var(--warm-400); margin-bottom: 14px;
   }
   .mode-card .mode-preview {
-    display: flex; justify-content: center; gap: 6px;
-    margin-bottom: 16px; min-height: 36px; align-items: center;
-  }
-  .preview-dot {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: var(--app-blue); opacity: 0.55;
-  }
-  .preview-dot.empty {
-    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.45;
+    display: flex; justify-content: center; align-items: center;
+    margin-bottom: 14px; min-height: 70px;
   }
   .mode-btns {
-    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
   }
   .start-btn {
-    padding: 11px 22px;
+    padding: 10px 20px;
     border: 1.5px solid var(--border);
-    border-radius: 12px;
-    background: #fff;
-    font-size: 0.9rem; font-weight: 700;
+    border-radius: 12px; background: #fff;
+    font-size: 0.875rem; font-weight: 700;
     color: var(--warm-600);
     cursor: pointer; font-family: inherit;
     transition: all 0.12s;
@@ -165,110 +152,103 @@
     border-color: var(--app-blue); color: var(--app-blue);
   }
 
-  /* Settings Panel */
-  .settings-panel {
-    background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 20px; width: 100%;
-    margin-bottom: 14px;
+  /* ===== Settings Panel ===== */
+  .settings-section {
+    width: 100%; margin-top: 6px;
   }
-  .settings-panel h3 {
-    font-size: 0.9rem; font-weight: 700; color: var(--warm-500);
-    margin-bottom: 14px;
+  .setting-divider {
+    border-top: 1.5px solid var(--border-light);
+    padding-top: 18px; margin-top: 18px;
   }
-  .setting-row {
+  .setting-header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--warm-200);
+    margin-bottom: 4px;
   }
-  .setting-row:last-child { border-bottom: none; }
-  .setting-label {
+  .setting-title {
     font-size: 0.875rem; font-weight: 600; color: var(--warm-700);
   }
-  .setting-label small {
-    display: block; font-size: 0.75rem; font-weight: 400; color: var(--warm-400);
-    margin-top: 2px;
+  .setting-title .badge {
+    font-size: 0.7rem; font-weight: 400; color: var(--warm-400);
+    margin-left: 6px;
+  }
+  .setting-desc {
+    font-size: 0.75rem; color: var(--warm-400);
+    margin-top: 2px; margin-bottom: 8px;
   }
 
   /* Toggle */
   .toggle-track {
     width: 48px; height: 28px;
-    border-radius: 99px;
+    border-radius: 99px; position: relative;
     background: #E0DAD0; border: none;
-    cursor: pointer; position: relative;
-    transition: background 0.2s; flex-shrink: 0;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.2s;
   }
-  .toggle-track.on { background: var(--app-green); }
+  .toggle-track.on { background: #5BC886; }
   .toggle-knob {
     width: 22px; height: 22px; border-radius: 50%;
     background: #fff; position: absolute;
     top: 3px; left: 3px;
-    transition: left 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    transition: transform 0.2s;
   }
-  .toggle-track.on .toggle-knob { left: 23px; }
+  .toggle-track.on .toggle-knob { transform: translateX(20px); }
 
-  /* Impulse details */
-  .impulse-details {
-    display: none; margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--warm-200);
-  }
-  .impulse-details.show { display: block; }
-  .impulse-mode-btns {
-    display: flex; gap: 8px; margin-bottom: 12px;
+  /* Impulse mode options */
+  .impulse-mode-options {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px; margin-bottom: 10px;
   }
   .impulse-mode-btn {
-    flex: 1; padding: 10px;
-    border: 1.5px solid var(--border);
-    border-radius: 12px; background: #fff;
-    font-size: 0.85rem; font-weight: 600;
-    color: var(--warm-500);
-    cursor: pointer; font-family: inherit;
-    transition: all 0.12s;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 10px 8px;
+    border-radius: 14px; border: 2px solid var(--border);
+    background: #fff; cursor: pointer;
+    transition: all 0.15s; font-family: inherit;
   }
-  .impulse-mode-btn.active {
-    border-color: var(--app-orange);
-    background: var(--app-orange-soft);
-    color: var(--app-orange);
+  .impulse-mode-btn.selected {
+    border-color: #C4AA82; background: #FAF5EE;
   }
-  .impulse-delay-row {
-    display: none; flex-wrap: wrap; gap: 6px;
+  .impulse-mode-icon { font-size: 1.2rem; margin-bottom: 2px; }
+  .impulse-mode-label { font-size: 0.8rem; font-weight: 700; color: var(--warm-700); }
+  .impulse-mode-desc { font-size: 0.65rem; color: var(--warm-400); margin-top: 1px; }
+
+  /* Delay buttons */
+  .delay-row {
+    display: none; gap: 4px;
   }
-  .impulse-delay-row.show { display: flex; }
+  .delay-row.show { display: flex; }
   .imp-sec {
-    padding: 7px 13px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px; background: #fff;
-    font-size: 0.8rem; font-weight: 600;
-    color: var(--warm-500);
+    flex: 1; padding: 8px 0;
+    font-size: 0.75rem; font-weight: 600;
+    border-radius: 10px; border: 2px solid var(--border);
+    background: #fff; color: #8C8070;
     cursor: pointer; font-family: inherit;
-    transition: all 0.12s;
+    transition: all 0.15s; text-align: center;
   }
   .imp-sec.active {
-    border-color: var(--app-orange);
-    background: var(--app-orange-soft);
-    color: var(--app-orange);
+    border-color: #C4AA82; background: #FAF5EE; color: #7B6545;
   }
+
+  /* Impulse details */
+  .impulse-details { display: none; margin-top: 8px; }
+  .impulse-details.show { display: block; }
 
   /* Logout */
   .logout-btn {
-    background: none;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 14px;
+    background: none; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 6px 14px;
     font-size: 0.75rem; font-weight: 600;
     color: var(--warm-400);
-    cursor: pointer; font-family: inherit;
-    margin-top: 8px;
-    transition: background 0.12s;
+    cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.15s;
+    margin-top: 20px;
   }
-  .logout-btn:hover { background: var(--warm-200); }
+  .logout-btn:hover { background: var(--bg); }
 
   /* ===== Play View ===== */
   #play-view {
-    width: 100%; max-width: 480px;
-    padding: 24px 20px;
+    width: 100%;
     display: flex; flex-direction: column; align-items: center;
   }
   .play-header {
@@ -289,55 +269,56 @@
   .play-score {
     font-size: 0.85rem; font-weight: 700; color: var(--app-blue);
   }
+  .combo-badge {
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--app-orange); min-height: 20px;
+  }
 
   /* Game container */
   .game-container {
     background: #fff; border: 1.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 28px 20px; width: 100%;
-    min-height: 400px;
+    border-radius: 24px;
+    padding: 24px 18px; width: 100%;
+    min-height: 380px;
     display: flex; flex-direction: column; align-items: center;
     position: relative;
   }
 
   /* Question */
   .question-label {
-    font-size: 0.9rem; color: var(--warm-400); font-weight: 500;
+    font-size: 0.85rem; color: var(--warm-400); font-weight: 500;
     margin-bottom: 8px;
   }
   .question-number {
-    font-size: 4.5rem; font-weight: 900; line-height: 1;
+    font-size: 3rem; font-weight: 900; line-height: 1;
     color: var(--warm-800); margin-bottom: 8px;
   }
 
   /* Circles - 5 per row, 2 rows */
   .circles-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin: 12px 0 24px;
-    width: 190px;
+    display: grid; grid-template-columns: repeat(5, 30px);
+    gap: 8px; margin: 12px 0 20px;
+    justify-content: center;
   }
   .dot {
     width: 30px; height: 30px; border-radius: 50%;
     background: var(--app-blue); opacity: 0.65;
   }
   .dot.empty {
-    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.45;
-    width: 30px; height: 30px;
+    background: none; border: 2.5px dashed var(--warm-300);
+    opacity: 0.45; width: 30px; height: 30px;
   }
 
   /* Choices */
   .choices-grid {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 12px; width: 100%; max-width: 300px;
+    gap: 12px; width: 100%; max-width: 280px;
     margin-top: auto;
   }
   .choice-btn {
-    padding: 20px;
+    padding: 18px;
     border: 2.5px solid var(--border);
-    border-radius: var(--radius);
-    background: #fff;
+    border-radius: 16px; background: #fff;
     font-size: 2rem; font-weight: 900;
     color: var(--warm-700);
     cursor: pointer; font-family: inherit;
@@ -358,19 +339,18 @@
 
   /* Reveal button */
   .reveal-btn {
-    padding: 14px 32px;
-    border: 1.5px solid var(--app-orange);
-    border-radius: 12px;
-    background: var(--app-orange-soft);
+    padding: 12px 28px;
+    border: 2px solid #C4AA82; border-radius: 14px;
+    background: #FAF5EE;
     font-size: 0.95rem; font-weight: 700;
-    color: var(--app-orange);
+    color: #7B6545;
     cursor: pointer; font-family: inherit;
-    margin-top: 16px;
+    margin-top: 14px;
   }
 
   /* Impulse message */
   .impulse-msg {
-    font-size: 1rem; font-weight: 600;
+    font-size: 0.95rem; font-weight: 600;
     color: var(--app-orange);
     margin-top: 12px; min-height: 24px;
     text-align: center;
@@ -386,23 +366,22 @@
   .pair-info strong { color: var(--app-blue); }
   .pair-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 10px; width: 100%; max-width: 340px;
+    gap: 10px; width: 100%; max-width: 320px;
   }
-  .pair-grid.cols-5 { grid-template-columns: repeat(5, 1fr); max-width: 380px; }
+  .pair-grid.cols-5 { grid-template-columns: repeat(5, 1fr); max-width: 370px; }
   .pair-grid.cols-6 { grid-template-columns: repeat(6, 1fr); max-width: 420px; }
   .pair-cell {
     aspect-ratio: 1;
     border: 2.5px solid var(--border);
-    border-radius: 14px;
-    background: #fff;
+    border-radius: 14px; background: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.75rem; font-weight: 900;
     color: var(--warm-700);
     cursor: pointer; font-family: inherit;
     transition: all 0.1s; position: relative;
   }
-  .pair-grid.cols-5 .pair-cell { font-size: 1.4rem; border-width: 2px; }
-  .pair-grid.cols-6 .pair-cell { font-size: 1.15rem; border-width: 2px; border-radius: 10px; }
+  .pair-grid.cols-5 .pair-cell { font-size: 1.35rem; border-width: 2px; }
+  .pair-grid.cols-6 .pair-cell { font-size: 1.1rem; border-width: 2px; border-radius: 10px; }
   .pair-cell:active { transform: scale(0.95); }
   .pair-cell.selected {
     border-color: var(--app-blue); background: var(--app-blue-soft);
@@ -411,8 +390,7 @@
   }
   .pair-cell.matched {
     border-color: var(--app-green); background: var(--app-green-light);
-    color: var(--app-green);
-    cursor: default; opacity: 0.6;
+    color: var(--app-green); cursor: default; opacity: 0.6;
   }
   .pair-cell.matched::after {
     content: '\2713'; position: absolute;
@@ -432,7 +410,7 @@
   .complete-overlay {
     position: absolute; inset: 0;
     background: rgba(255,255,255,0.95);
-    border-radius: var(--radius-lg);
+    border-radius: 24px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 10px; z-index: 10;
@@ -451,12 +429,6 @@
   }
   .next-btn:active { transform: scale(0.96); }
 
-  /* Combo badge */
-  .combo-badge {
-    font-size: 0.8rem; font-weight: 700;
-    color: var(--app-orange); min-height: 20px;
-  }
-
   /* Feedback */
   .feedback-float {
     position: fixed; top: 50%; left: 50%;
@@ -465,9 +437,7 @@
     pointer-events: none;
     transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
   }
-  .feedback-float.show {
-    transform: translate(-50%,-50%) scale(1);
-  }
+  .feedback-float.show { transform: translate(-50%,-50%) scale(1); }
 
   /* Animations */
   @keyframes popIn {
@@ -475,7 +445,7 @@
     45% { transform: scale(1.15); opacity: 1; }
     65% { transform: scale(0.92); }
     80% { transform: scale(1.05); }
-    100% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1); }
   }
   @keyframes shake {
     0%,100% { transform: translateX(0); }
@@ -487,38 +457,77 @@
     50% { transform: scale(1.08); opacity: 0.7; }
   }
 
-  /* Wider game container for large grids */
-  .game-container.wide { max-width: 520px; }
-
-  /* Desktop */
-  @media (min-width: 560px) {
-    #login-view { max-width: 560px; }
-    #start-view, #play-view {
-      max-width: 560px; padding: 44px 40px;
+  /* ===== Tablet & Desktop ===== */
+  @media (min-width: 768px) {
+    body { align-items: center; padding: 32px; }
+    .app {
+      max-width: 560px;
+      min-height: auto;
+      border-radius: 32px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+      padding: 44px 40px;
     }
-    body {
-      justify-content: flex-start;
-    }
-    .question-number { font-size: 5.5rem; }
+    .login-view { min-height: auto; padding: 60px 40px; }
+    .question-number { font-size: 3.75rem; }
     .choice-btn { font-size: 2.5rem; }
+    .dot { width: 34px; height: 34px; }
+    .dot.empty { width: 34px; height: 34px; }
+    .circles-row { grid-template-columns: repeat(5, 34px); gap: 10px; }
     .pair-grid.cols-6 { max-width: 480px; }
   }
 </style>
 </head>
 <body>
 
+<div class="app">
+
 <!-- ===== Login View ===== -->
-<div id="login-view">
+<div id="login-view" class="login-view">
   <div class="login-logo-area">
-    <div class="turtle-logo">🐢</div>
-    <h1>느린아이</h1>
+    <div class="turtle-svg">
+      <svg viewBox="0 0 120 100" width="120" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="30" cy="72" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(-20 30 72)"/>
+        <ellipse cx="78" cy="76" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(15 78 76)"/>
+        <ellipse cx="28" cy="54" rx="9" ry="5.5" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(-10 28 54)"/>
+        <path d="M18 60 L10 55" stroke="#F2DC8C" stroke-width="4" stroke-linecap="round"/>
+        <ellipse cx="55" cy="58" rx="35" ry="20" fill="#F5E6C8" stroke="#3A9B6A" stroke-width="2"/>
+        <ellipse cx="52" cy="42" rx="32" ry="28" fill="#7EDCAA" stroke="#3A9B6A" stroke-width="2.5"/>
+        <path d="M52 18 L42 32 L42 48 L52 58 L62 48 L62 32 Z" fill="none" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+        <line x1="42" y1="32" x2="24" y2="38" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+        <line x1="62" y1="32" x2="80" y2="38" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+        <line x1="42" y1="48" x2="26" y2="56" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+        <line x1="62" y1="48" x2="78" y2="56" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+        <ellipse cx="42" cy="26" rx="6" ry="4" fill="white" opacity="0.35" transform="rotate(-15 42 26)"/>
+        <ellipse cx="62" cy="36" rx="4" ry="3" fill="white" opacity="0.2"/>
+        <ellipse cx="92" cy="40" rx="17" ry="15" fill="#F5E6C8" stroke="#3A9B6A" stroke-width="2.5"/>
+        <ellipse cx="82" cy="72" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(10 82 72)"/>
+        <circle cx="99" cy="35" r="4" fill="white" stroke="#3A9B6A" stroke-width="1.5"/>
+        <circle cx="100" cy="34" r="2.5" fill="#3A9B6A"/>
+        <circle cx="101" cy="33" r="1" fill="white"/>
+        <circle cx="100" cy="44" r="3.5" fill="#F0A050" opacity="0.4"/>
+        <path d="M94 46 Q98 50 103 46" fill="none" stroke="#3A9B6A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1><span style="color:#2E7FD9;">느린</span><span style="color:#F0901E;">아이</span> <span style="color:#4A4035;">보수 연습</span></h1>
     <p class="login-subtitle">더해서 10이 되는 수를 찾아보세요</p>
   </div>
   <div class="login-buttons">
-    <button class="login-btn kakao" onclick="doLogin('kakao')">카카오 로그인</button>
-    <button class="login-btn naver" onclick="doLogin('naver')">네이버 로그인</button>
-    <button class="login-btn google" onclick="doLogin('google')">Google 로그인</button>
-    <button class="login-btn facebook" onclick="doLogin('facebook')">Facebook 로그인</button>
+    <button class="login-btn kakao" onclick="doLogin('kakao')">
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 1C4.477 1 0 4.477 0 8.667c0 2.7 1.753 5.072 4.393 6.413-.192.717-.694 2.6-.794 3.004-.124.497.182.49.383.356.158-.105 2.51-1.708 3.525-2.398.8.118 1.628.18 2.493.18 5.523 0 10-3.477 10-7.555C20 4.477 15.523 1 10 1z" fill="#191919"/></svg>
+      카카오 로그인
+    </button>
+    <button class="login-btn naver" onclick="doLogin('naver')">
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M13.57 10.684L6.066 0H0v20h6.43V9.316L13.934 20H20V0h-6.43v10.684z" fill="white"/></svg>
+      네이버 로그인
+    </button>
+    <button class="login-btn google" onclick="doLogin('google')">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" fill="#FFC107"/><path d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" fill="#FF3D00"/><path d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" fill="#4CAF50"/><path d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l.001-.001 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" fill="#1976D2"/></svg>
+      Google 로그인
+    </button>
+    <button class="login-btn facebook" onclick="doLogin('facebook')">
+      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" fill="white"/></svg>
+      Facebook 로그인
+    </button>
   </div>
   <div class="login-divider">또는</div>
   <div class="login-buttons">
@@ -529,18 +538,49 @@
 <!-- ===== Start View ===== -->
 <div id="start-view" class="hidden">
   <div class="brand">
-    <span class="turtle-icon">🐢</span>
-    <h1>느린아이</h1>
+    <svg viewBox="0 0 120 100" width="48" height="40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="30" cy="72" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(-20 30 72)"/>
+      <ellipse cx="78" cy="76" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(15 78 76)"/>
+      <ellipse cx="28" cy="54" rx="9" ry="5.5" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(-10 28 54)"/>
+      <path d="M18 60 L10 55" stroke="#F2DC8C" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="55" cy="58" rx="35" ry="20" fill="#F5E6C8" stroke="#3A9B6A" stroke-width="2"/>
+      <ellipse cx="52" cy="42" rx="32" ry="28" fill="#7EDCAA" stroke="#3A9B6A" stroke-width="2.5"/>
+      <path d="M52 18 L42 32 L42 48 L52 58 L62 48 L62 32 Z" fill="none" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+      <line x1="42" y1="32" x2="24" y2="38" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+      <line x1="62" y1="32" x2="80" y2="38" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+      <line x1="42" y1="48" x2="26" y2="56" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+      <line x1="62" y1="48" x2="78" y2="56" stroke="#3A9B6A" stroke-width="1.3" opacity="0.35"/>
+      <ellipse cx="42" cy="26" rx="6" ry="4" fill="white" opacity="0.35" transform="rotate(-15 42 26)"/>
+      <ellipse cx="62" cy="36" rx="4" ry="3" fill="white" opacity="0.2"/>
+      <ellipse cx="92" cy="40" rx="17" ry="15" fill="#F5E6C8" stroke="#3A9B6A" stroke-width="2.5"/>
+      <ellipse cx="82" cy="72" rx="10" ry="6" fill="#F2DC8C" stroke="#3A9B6A" stroke-width="2" transform="rotate(10 82 72)"/>
+      <circle cx="99" cy="35" r="4" fill="white" stroke="#3A9B6A" stroke-width="1.5"/>
+      <circle cx="100" cy="34" r="2.5" fill="#3A9B6A"/>
+      <circle cx="101" cy="33" r="1" fill="white"/>
+      <circle cx="100" cy="44" r="3.5" fill="#F0A050" opacity="0.4"/>
+      <path d="M94 46 Q98 50 103 46" fill="none" stroke="#3A9B6A" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <h1><span style="color:#2E7FD9;">느린</span><span style="color:#F0901E;">아이</span> <span style="color:#4A4035;">보수 연습</span></h1>
   </div>
-  <p class="brand-sub">보수 연습</p>
+  <p class="brand-sub">더해서 10이 되는 수를 찾아보세요</p>
 
   <!-- Mode 1: Quiz with circles -->
   <div class="mode-card">
     <h2>보수 찾기 (원 표시)</h2>
     <p class="desc">숫자와 원을 보고, 더해서 10이 되는 수를 골라요</p>
     <div class="mode-preview">
-      <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-      <div class="preview-dot empty"></div><div class="preview-dot empty"></div>
+      <svg width="200" height="70" viewBox="0 0 200 70">
+        <text x="30" y="35" font-size="28" font-weight="900" fill="#4A4035" text-anchor="middle">3</text>
+        <text x="55" y="32" font-size="14" font-weight="600" fill="#B8AD9E">→</text>
+        <circle cx="80" cy="22" r="8" fill="#6BADE8" opacity="0.6"/>
+        <circle cx="100" cy="22" r="8" fill="#6BADE8" opacity="0.6"/>
+        <circle cx="120" cy="22" r="8" fill="#6BADE8" opacity="0.6"/>
+        <circle cx="80" cy="44" r="8" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="3 2"/>
+        <circle cx="100" cy="44" r="8" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="3 2"/>
+        <text x="145" y="35" font-size="14" font-weight="600" fill="#B8AD9E">→</text>
+        <rect x="158" y="14" width="36" height="32" rx="8" fill="#D4F5E0" stroke="#5BC886" stroke-width="2"/>
+        <text x="176" y="36" font-size="18" font-weight="900" fill="#5BC886" text-anchor="middle">7</text>
+      </svg>
     </div>
     <div class="mode-btns">
       <button class="start-btn" onclick="startGame('quiz-circles')">시작하기</button>
@@ -551,8 +591,14 @@
   <div class="mode-card">
     <h2>보수 찾기</h2>
     <p class="desc">숫자만 보고, 더해서 10이 되는 수를 골라요</p>
-    <div class="mode-preview" style="font-size:2rem;font-weight:900;color:var(--warm-600);">
-      ? + ? = 10
+    <div class="mode-preview">
+      <svg width="200" height="60" viewBox="0 0 200 60">
+        <text x="40" y="40" font-size="28" font-weight="900" fill="#4A4035" text-anchor="middle">4</text>
+        <text x="72" y="38" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">+</text>
+        <text x="104" y="40" font-size="28" font-weight="900" fill="#2E7FD9" text-anchor="middle">?</text>
+        <text x="136" y="38" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">=</text>
+        <text x="168" y="40" font-size="28" font-weight="900" fill="#5BC886" text-anchor="middle">10</text>
+      </svg>
     </div>
     <div class="mode-btns">
       <button class="start-btn" onclick="startGame('quiz-plain')">시작하기</button>
@@ -563,8 +609,19 @@
   <div class="mode-card">
     <h2>짝 맞추기</h2>
     <p class="desc">더해서 10이 되는 두 수를 찾아 터치하세요</p>
-    <div class="mode-preview" style="font-size:1.4rem;font-weight:700;color:var(--app-blue);">
-      1&nbsp;&nbsp;9&nbsp;&nbsp;→&nbsp;&nbsp;10 ✓
+    <div class="mode-preview">
+      <svg width="220" height="60" viewBox="0 0 220 60">
+        <rect x="4" y="8" width="36" height="36" rx="8" fill="#EEF6FD" stroke="#6BADE8" stroke-width="2"/>
+        <text x="22" y="32" font-size="16" font-weight="900" fill="#6BADE8" text-anchor="middle">2</text>
+        <rect x="48" y="8" width="36" height="36" rx="8" fill="#fff" stroke="#E8E2DA" stroke-width="1.5"/>
+        <text x="66" y="32" font-size="16" font-weight="900" fill="#4A4035" text-anchor="middle">5</text>
+        <rect x="92" y="8" width="36" height="36" rx="8" fill="#EEF6FD" stroke="#6BADE8" stroke-width="2"/>
+        <text x="110" y="32" font-size="16" font-weight="900" fill="#6BADE8" text-anchor="middle">8</text>
+        <text x="145" y="32" font-size="16" font-weight="700" fill="#B8AD9E">→</text>
+        <rect x="162" y="8" width="52" height="36" rx="8" fill="#D4F5E0" stroke="#5BC886" stroke-width="2"/>
+        <text x="188" y="28" font-size="11" font-weight="700" fill="#5BC886" text-anchor="middle">2+8</text>
+        <text x="188" y="42" font-size="11" font-weight="700" fill="#5BC886" text-anchor="middle">= 10 ✓</text>
+      </svg>
     </div>
     <div class="mode-btns">
       <button class="start-btn" onclick="startGame('pair',10)">10개</button>
@@ -574,35 +631,42 @@
   </div>
 
   <!-- Settings -->
-  <div class="settings-panel">
-    <h3>설정</h3>
-
-    <div class="setting-row">
-      <div class="setting-label">
-        음성 읽기
-        <small>문제와 결과를 소리로 읽어줘요</small>
+  <div class="settings-section">
+    <div class="setting-divider">
+      <div class="setting-header">
+        <div>
+          <p class="setting-title">음성 <span class="badge">정답/오답 음성 안내</span></p>
+        </div>
+        <button class="toggle-track" id="tts-toggle" onclick="toggleTTS()" role="switch">
+          <span class="toggle-knob"></span>
+        </button>
       </div>
-      <button class="toggle-track" id="tts-toggle" onclick="toggleTTS()">
-        <div class="toggle-knob"></div>
-      </button>
     </div>
 
-    <div class="setting-row" style="flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-        <div class="setting-label">
-          충동방지
-          <small>바로 누르지 않고 생각할 시간을 줘요</small>
+    <div class="setting-divider">
+      <div class="setting-header">
+        <div>
+          <p class="setting-title">충동방지 <span class="badge">보수 찾기 모드</span></p>
+          <p class="setting-desc">생각할 시간을 줘요</p>
         </div>
-        <button class="toggle-track" id="impulse-toggle" onclick="toggleImpulse()">
-          <div class="toggle-knob"></div>
+        <button class="toggle-track" id="impulse-toggle" onclick="toggleImpulse()" role="switch">
+          <span class="toggle-knob"></span>
         </button>
       </div>
       <div class="impulse-details" id="impulse-details">
-        <div class="impulse-mode-btns">
-          <button class="impulse-mode-btn active" data-mode="hide" onclick="setImpulseMode('hide')">👀 보기 확인</button>
-          <button class="impulse-mode-btn" data-mode="lock" onclick="setImpulseMode('lock')">🔒 선택 잠금</button>
+        <div class="impulse-mode-options">
+          <button class="impulse-mode-btn" data-mode="hide" onclick="setImpulseMode('hide')">
+            <span class="impulse-mode-icon">👀</span>
+            <span class="impulse-mode-label">보기 확인</span>
+            <span class="impulse-mode-desc">버튼을 누르면 보기가 나타나요</span>
+          </button>
+          <button class="impulse-mode-btn" data-mode="lock" onclick="setImpulseMode('lock')">
+            <span class="impulse-mode-icon">🔒</span>
+            <span class="impulse-mode-label">선택 잠금</span>
+            <span class="impulse-mode-desc">N초 동안 선택할 수 없어요</span>
+          </button>
         </div>
-        <div class="impulse-delay-row" id="impulse-delay-row"></div>
+        <div class="delay-row" id="impulse-delay-row"></div>
       </div>
     </div>
   </div>
@@ -620,6 +684,8 @@
   <span class="combo-badge" id="combo-badge"></span>
   <div class="game-container" id="game-container"></div>
 </div>
+
+</div><!-- /.app -->
 
 <div class="feedback-float" id="feedback"></div>
 
@@ -651,11 +717,7 @@ function doLogout() {
 
 function checkLogin() {
   const provider = localStorage.getItem(LOGIN_KEY);
-  if (provider) {
-    showView('start');
-  } else {
-    showView('login');
-  }
+  showView(provider ? 'start' : 'login');
 }
 
 function showView(name) {
@@ -713,7 +775,7 @@ function renderSettingsUI() {
   detEl.classList.toggle('show', settings.impulse);
 
   document.querySelectorAll('.impulse-mode-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.mode === settings.impulseMode);
+    b.classList.toggle('selected', b.dataset.mode === settings.impulseMode);
   });
 
   delayRow.classList.toggle('show', settings.impulseMode === 'lock');
@@ -757,11 +819,8 @@ function startGame(mode, count) {
   document.getElementById('play-title').textContent = titles[mode];
   updateScoreUI();
 
-  if (mode.startsWith('quiz')) {
-    nextQuiz();
-  } else {
-    startPair();
-  }
+  if (mode.startsWith('quiz')) nextQuiz();
+  else startPair();
 }
 
 function updateScoreUI() {
@@ -803,7 +862,6 @@ function nextQuiz() {
     if (w !== answer) wrongs.add(w);
   }
   const choices = shuffle([answer, ...wrongs]);
-
   const gc = document.getElementById('game-container');
 
   let circlesHTML = '';
