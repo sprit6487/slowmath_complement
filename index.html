@@ -10,8 +10,9 @@
 <style>
   :root {
     --warm-50: #FDFCFA; --warm-100: #FAF7F2; --warm-200: #F3EDE4;
-    --warm-300: #E0D5C5; --warm-400: #B5A78E; --warm-500: #8C7E6A;
+    --warm-300: #E0D5C5; --warm-400: #B8AD9E; --warm-500: #8C7E6A;
     --warm-600: #6B5F50; --warm-700: #4A4035; --warm-800: #2E261D;
+    --border: #E8E2DA;
     --app-blue: #6BADE8; --app-blue-light: #D9EDFC; --app-blue-soft: #EEF6FD;
     --app-orange: #F0A050; --app-orange-light: #FDE8C8; --app-orange-soft: #FFF6EB;
     --app-green: #5BC886; --app-green-light: #D4F5E0;
@@ -24,101 +25,156 @@
   body {
     font-family: 'Noto Sans KR', sans-serif;
     background: var(--bg);
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: center;
     color: var(--warm-700);
     -webkit-tap-highlight-color: transparent;
     user-select: none;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
+  .hidden { display: none !important; }
+
+  /* ===== Login View ===== */
+  #login-view {
+    width: 100%; max-width: 480px;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center;
+    flex: 1; min-height: 100dvh;
+    padding: 40px 20px;
+  }
+  .login-logo-area {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .login-logo-area .turtle-logo {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .login-logo-area h1 {
+    font-size: 1.875rem; font-weight: 900;
+    letter-spacing: -0.025em;
+    color: var(--warm-800);
+    margin-top: 8px;
+  }
+  .login-subtitle {
+    color: var(--warm-400);
+    font-size: 0.9375rem; font-weight: 500;
+    margin-top: 6px;
+  }
+  .login-buttons {
+    width: 100%; max-width: 320px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .login-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px;
+    width: 100%; padding: 14px;
+    border: none; border-radius: 12px;
+    font-size: 0.9375rem; font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .login-btn:active { opacity: 0.8; }
+  .login-btn.kakao { background: #FEE500; color: #191919; }
+  .login-btn.naver { background: #03C75A; color: #fff; }
+  .login-btn.google { background: #fff; color: #444; border: 1.5px solid #DADCE0; }
+  .login-btn.facebook { background: #1877F2; color: #fff; }
+  .login-divider {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; max-width: 320px;
+    margin: 16px 0 4px;
+    color: var(--warm-400);
+    font-size: 0.8rem;
+  }
+  .login-divider::before, .login-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--warm-300);
+  }
+  .login-btn.guest {
+    background: none; border: 1.5px solid var(--border);
+    color: var(--warm-500); font-weight: 500;
+  }
 
   /* ===== Start View ===== */
-  #start-view, #play-view {
+  #start-view {
     width: 100%; max-width: 480px;
     padding: 24px 20px;
     display: flex; flex-direction: column; align-items: center;
   }
-  #play-view { display: none; }
 
   .brand {
     display: flex; align-items: center; gap: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
-  .brand img {
-    width: 44px; height: 44px; border-radius: 12px;
-  }
+  .brand .turtle-icon { font-size: 2.2rem; }
   .brand h1 {
-    font-size: 1.875rem; font-weight: 900; letter-spacing: -0.025em;
+    font-size: 1.875rem; font-weight: 900;
+    letter-spacing: -0.025em;
     color: var(--warm-800);
   }
   .brand-sub {
-    font-size: 0.85rem; color: var(--warm-500); margin-bottom: 24px;
-    font-weight: 500;
+    font-size: 0.85rem; color: var(--warm-400);
+    margin-bottom: 24px; font-weight: 500;
   }
 
   /* Mode Cards */
   .mode-card {
-    background: var(--warm-50);
-    border: 2px solid var(--warm-200);
+    background: #fff; border: 1.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 24px 20px;
-    width: 100%;
-    margin-bottom: 16px;
-    text-align: center;
+    padding: 24px 20px; width: 100%;
+    margin-bottom: 14px; text-align: center;
+    transition: transform 0.12s, box-shadow 0.12s;
+    cursor: default;
   }
+  .mode-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .mode-card:active { transform: scale(0.98); }
   .mode-card h2 {
-    font-size: 1.15rem; font-weight: 700; color: var(--warm-700);
+    font-size: 1.1rem; font-weight: 700; color: var(--warm-700);
     margin-bottom: 4px;
   }
   .mode-card .desc {
-    font-size: 0.8rem; color: var(--warm-500); margin-bottom: 16px;
+    font-size: 0.8rem; color: var(--warm-400); margin-bottom: 16px;
   }
   .mode-card .mode-preview {
     display: flex; justify-content: center; gap: 6px;
     margin-bottom: 16px; min-height: 36px; align-items: center;
   }
   .preview-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--app-blue); opacity: 0.6;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--app-blue); opacity: 0.55;
   }
   .preview-dot.empty {
-    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.5;
+    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.45;
   }
   .mode-btns {
     display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
   }
   .start-btn {
-    padding: 12px 24px;
-    border: 2px solid var(--warm-200);
-    border-radius: var(--radius);
-    background: var(--warm-50);
-    font-size: 0.95rem; font-weight: 700;
-    color: var(--warm-700);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
+    padding: 11px 22px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    font-size: 0.9rem; font-weight: 700;
+    color: var(--warm-600);
+    cursor: pointer; font-family: inherit;
+    transition: all 0.12s;
   }
   .start-btn:hover, .start-btn:active {
     background: var(--app-blue-soft);
-    border-color: var(--app-blue);
-    color: var(--app-blue);
+    border-color: var(--app-blue); color: var(--app-blue);
   }
 
   /* Settings Panel */
   .settings-panel {
-    background: var(--warm-50);
-    border: 2px solid var(--warm-200);
+    background: #fff; border: 1.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 20px;
-    width: 100%;
-    margin-bottom: 16px;
+    padding: 20px; width: 100%;
+    margin-bottom: 14px;
   }
   .settings-panel h3 {
-    font-size: 0.95rem; font-weight: 700; color: var(--warm-600);
-    margin-bottom: 16px;
+    font-size: 0.9rem; font-weight: 700; color: var(--warm-500);
+    margin-bottom: 14px;
   }
   .setting-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -127,40 +183,34 @@
   }
   .setting-row:last-child { border-bottom: none; }
   .setting-label {
-    font-size: 0.9rem; font-weight: 600; color: var(--warm-700);
+    font-size: 0.875rem; font-weight: 600; color: var(--warm-700);
   }
   .setting-label small {
-    display: block; font-size: 0.75rem; font-weight: 400; color: var(--warm-500);
+    display: block; font-size: 0.75rem; font-weight: 400; color: var(--warm-400);
     margin-top: 2px;
   }
 
-  /* Toggle switch */
+  /* Toggle */
   .toggle-track {
-    width: 52px; height: 28px;
-    border-radius: 14px;
-    background: var(--warm-300);
-    border: none;
-    cursor: pointer;
-    position: relative;
-    transition: background 0.2s;
-    flex-shrink: 0;
+    width: 48px; height: 28px;
+    border-radius: 99px;
+    background: #E0DAD0; border: none;
+    cursor: pointer; position: relative;
+    transition: background 0.2s; flex-shrink: 0;
   }
-  .toggle-track.on { background: var(--app-blue); }
+  .toggle-track.on { background: var(--app-green); }
   .toggle-knob {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: #fff;
-    position: absolute;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fff; position: absolute;
     top: 3px; left: 3px;
     transition: left 0.2s;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
-  .toggle-track.on .toggle-knob { left: 27px; }
+  .toggle-track.on .toggle-knob { left: 23px; }
 
   /* Impulse details */
   .impulse-details {
-    display: none;
-    margin-top: 12px;
+    display: none; margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid var(--warm-200);
   }
@@ -169,16 +219,13 @@
     display: flex; gap: 8px; margin-bottom: 12px;
   }
   .impulse-mode-btn {
-    flex: 1;
-    padding: 10px;
-    border: 2px solid var(--warm-200);
-    border-radius: var(--radius);
-    background: var(--warm-50);
+    flex: 1; padding: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px; background: #fff;
     font-size: 0.85rem; font-weight: 600;
-    color: var(--warm-600);
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
+    color: var(--warm-500);
+    cursor: pointer; font-family: inherit;
+    transition: all 0.12s;
   }
   .impulse-mode-btn.active {
     border-color: var(--app-orange);
@@ -186,20 +233,17 @@
     color: var(--app-orange);
   }
   .impulse-delay-row {
-    display: none;
-    flex-wrap: wrap; gap: 6px;
+    display: none; flex-wrap: wrap; gap: 6px;
   }
   .impulse-delay-row.show { display: flex; }
   .imp-sec {
-    padding: 8px 14px;
-    border: 2px solid var(--warm-200);
-    border-radius: 12px;
-    background: var(--warm-50);
+    padding: 7px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px; background: #fff;
     font-size: 0.8rem; font-weight: 600;
-    color: var(--warm-600);
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.15s;
+    color: var(--warm-500);
+    cursor: pointer; font-family: inherit;
+    transition: all 0.12s;
   }
   .imp-sec.active {
     border-color: var(--app-orange);
@@ -207,23 +251,40 @@
     color: var(--app-orange);
   }
 
+  /* Logout */
+  .logout-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--warm-400);
+    cursor: pointer; font-family: inherit;
+    margin-top: 8px;
+    transition: background 0.12s;
+  }
+  .logout-btn:hover { background: var(--warm-200); }
+
   /* ===== Play View ===== */
+  #play-view {
+    width: 100%; max-width: 480px;
+    padding: 24px 20px;
+    display: flex; flex-direction: column; align-items: center;
+  }
   .play-header {
     display: flex; align-items: center; justify-content: space-between;
     width: 100%; margin-bottom: 16px;
   }
   .back-btn {
-    padding: 8px 16px;
-    border: 2px solid var(--warm-200);
-    border-radius: var(--radius);
-    background: var(--warm-50);
-    font-size: 0.85rem; font-weight: 600;
-    color: var(--warm-600);
-    cursor: pointer;
-    font-family: inherit;
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px; background: #fff;
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--warm-500);
+    cursor: pointer; font-family: inherit;
   }
   .play-title {
-    font-size: 1rem; font-weight: 700; color: var(--warm-700);
+    font-size: 0.95rem; font-weight: 700; color: var(--warm-700);
   }
   .play-score {
     font-size: 0.85rem; font-weight: 700; color: var(--app-blue);
@@ -231,11 +292,9 @@
 
   /* Game container */
   .game-container {
-    background: var(--warm-50);
-    border: 2px solid var(--warm-200);
+    background: #fff; border: 1.5px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 28px 20px;
-    width: 100%;
+    padding: 28px 20px; width: 100%;
     min-height: 400px;
     display: flex; flex-direction: column; align-items: center;
     position: relative;
@@ -243,26 +302,29 @@
 
   /* Question */
   .question-label {
-    font-size: 0.95rem; color: var(--warm-500); font-weight: 500;
+    font-size: 0.9rem; color: var(--warm-400); font-weight: 500;
     margin-bottom: 8px;
   }
   .question-number {
     font-size: 4.5rem; font-weight: 900; line-height: 1;
-    color: var(--warm-800);
-    margin-bottom: 8px;
+    color: var(--warm-800); margin-bottom: 8px;
   }
 
-  /* Circles */
+  /* Circles - 5 per row, 2 rows */
   .circles-row {
-    display: flex; gap: 7px; flex-wrap: wrap; justify-content: center;
-    margin: 12px 0 24px; max-width: 280px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 12px 0 24px;
+    width: 190px;
   }
   .dot {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: var(--app-blue); opacity: 0.7;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--app-blue); opacity: 0.65;
   }
   .dot.empty {
-    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.5;
+    background: none; border: 2.5px dashed var(--warm-300); opacity: 0.45;
+    width: 30px; height: 30px;
   }
 
   /* Choices */
@@ -273,62 +335,52 @@
   }
   .choice-btn {
     padding: 20px;
-    border: 3px solid var(--warm-200);
+    border: 2.5px solid var(--border);
     border-radius: var(--radius);
-    background: var(--warm-50);
+    background: #fff;
     font-size: 2rem; font-weight: 900;
     color: var(--warm-700);
-    cursor: pointer;
-    transition: all 0.12s;
-    text-align: center;
-    font-family: inherit;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.1s; text-align: center;
   }
-  .choice-btn:active { transform: scale(0.95); }
+  .choice-btn:active:not(:disabled) { transform: scale(0.95); }
   .choice-btn.correct {
     border-color: var(--app-green); background: var(--app-green-light);
-    color: var(--app-green); animation: pop 0.3s ease;
+    color: var(--app-green); animation: popIn 0.35s ease;
   }
   .choice-btn.wrong {
     border-color: var(--app-red); background: var(--app-red-light);
     color: var(--app-red); animation: shake 0.4s ease;
   }
-  .choice-btn:disabled { pointer-events: none; opacity: 0.5; }
-
-  /* Chips hidden (impulse hide mode) */
-  .choices-grid.chips-hidden .choice-btn {
-    visibility: hidden;
-  }
-  .choices-grid.chips-locked .choice-btn {
-    pointer-events: none; opacity: 0.4;
-  }
+  .choice-btn:disabled { pointer-events: none; opacity: 0.4; }
+  .choices-grid.chips-hidden .choice-btn { visibility: hidden; }
+  .choices-grid.chips-locked .choice-btn { pointer-events: none; opacity: 0.4; }
 
   /* Reveal button */
   .reveal-btn {
     padding: 14px 32px;
-    border: 2px solid var(--app-orange);
-    border-radius: var(--radius);
+    border: 1.5px solid var(--app-orange);
+    border-radius: 12px;
     background: var(--app-orange-soft);
-    font-size: 1rem; font-weight: 700;
+    font-size: 0.95rem; font-weight: 700;
     color: var(--app-orange);
-    cursor: pointer;
-    font-family: inherit;
+    cursor: pointer; font-family: inherit;
     margin-top: 16px;
-    transition: all 0.15s;
   }
 
-  /* Impulse feedback text */
+  /* Impulse message */
   .impulse-msg {
     font-size: 1rem; font-weight: 600;
     color: var(--app-orange);
-    margin-top: 12px;
-    min-height: 24px;
+    margin-top: 12px; min-height: 24px;
     text-align: center;
+    animation: pulse-count 1s ease infinite;
   }
 
   /* Pair mode */
   .pair-info {
-    font-size: 1rem; font-weight: 600;
-    color: var(--warm-600); margin-bottom: 16px;
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--warm-500); margin-bottom: 16px;
     text-align: center;
   }
   .pair-info strong { color: var(--app-blue); }
@@ -340,33 +392,31 @@
   .pair-grid.cols-6 { grid-template-columns: repeat(6, 1fr); max-width: 420px; }
   .pair-cell {
     aspect-ratio: 1;
-    border: 3px solid var(--warm-200);
-    border-radius: var(--radius);
-    background: var(--warm-50);
+    border: 2.5px solid var(--border);
+    border-radius: 14px;
+    background: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 1.75rem; font-weight: 900;
     color: var(--warm-700);
-    cursor: pointer;
-    transition: all 0.12s;
-    font-family: inherit;
-    position: relative;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.1s; position: relative;
   }
-  .pair-grid.cols-5 .pair-cell { font-size: 1.4rem; border-width: 2.5px; }
-  .pair-grid.cols-6 .pair-cell { font-size: 1.15rem; border-width: 2px; border-radius: 12px; }
+  .pair-grid.cols-5 .pair-cell { font-size: 1.4rem; border-width: 2px; }
+  .pair-grid.cols-6 .pair-cell { font-size: 1.15rem; border-width: 2px; border-radius: 10px; }
   .pair-cell:active { transform: scale(0.95); }
   .pair-cell.selected {
     border-color: var(--app-blue); background: var(--app-blue-soft);
     color: var(--app-blue);
-    box-shadow: 0 0 0 3px rgba(107,173,232,0.25);
+    box-shadow: 0 0 0 3px rgba(107,173,232,0.2);
   }
   .pair-cell.matched {
     border-color: var(--app-green); background: var(--app-green-light);
     color: var(--app-green);
-    cursor: default; opacity: 0.65;
+    cursor: default; opacity: 0.6;
   }
   .pair-cell.matched::after {
     content: '\2713'; position: absolute;
-    top: 3px; right: 6px; font-size: 0.75rem;
+    top: 2px; right: 5px; font-size: 0.7rem;
     color: var(--app-green); font-weight: 700;
   }
   .pair-cell.wrong-pair {
@@ -374,14 +424,14 @@
     color: var(--app-red); animation: shake 0.4s ease;
   }
   .pair-progress {
-    font-size: 0.8rem; color: var(--warm-500);
+    font-size: 0.8rem; color: var(--warm-400);
     margin-top: 16px; font-weight: 500;
   }
 
   /* Complete overlay */
   .complete-overlay {
     position: absolute; inset: 0;
-    background: rgba(253,252,250,0.94);
+    background: rgba(255,255,255,0.95);
     border-radius: var(--radius-lg);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -390,25 +440,24 @@
   }
   .complete-emoji { font-size: 56px; }
   .complete-msg { font-size: 1.25rem; font-weight: 900; color: var(--warm-800); }
-  .complete-sub { font-size: 0.85rem; color: var(--warm-500); }
+  .complete-sub { font-size: 0.85rem; color: var(--warm-400); }
   .next-btn {
     margin-top: 8px; padding: 14px 36px;
-    border: none; border-radius: var(--radius);
+    border: none; border-radius: 12px;
     background: var(--app-blue);
     color: #fff; font-size: 1rem; font-weight: 700;
     cursor: pointer; font-family: inherit;
-    transition: transform 0.15s;
+    transition: transform 0.12s;
   }
   .next-btn:active { transform: scale(0.96); }
 
   /* Combo badge */
   .combo-badge {
     font-size: 0.8rem; font-weight: 700;
-    color: var(--app-orange);
-    min-height: 20px;
+    color: var(--app-orange); min-height: 20px;
   }
 
-  /* Feedback emoji */
+  /* Feedback */
   .feedback-float {
     position: fixed; top: 50%; left: 50%;
     transform: translate(-50%,-50%) scale(0);
@@ -421,11 +470,21 @@
   }
 
   /* Animations */
-  @keyframes pop {
-    0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); }
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    45% { transform: scale(1.15); opacity: 1; }
+    65% { transform: scale(0.92); }
+    80% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
   }
   @keyframes shake {
-    0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); }
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  @keyframes pulse-count {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.7; }
   }
 
   /* Wider game container for large grids */
@@ -433,7 +492,13 @@
 
   /* Desktop */
   @media (min-width: 560px) {
-    #start-view, #play-view { max-width: 560px; padding: 44px 40px; }
+    #login-view { max-width: 560px; }
+    #start-view, #play-view {
+      max-width: 560px; padding: 44px 40px;
+    }
+    body {
+      justify-content: flex-start;
+    }
     .question-number { font-size: 5.5rem; }
     .choice-btn { font-size: 2.5rem; }
     .pair-grid.cols-6 { max-width: 480px; }
@@ -442,10 +507,29 @@
 </head>
 <body>
 
+<!-- ===== Login View ===== -->
+<div id="login-view">
+  <div class="login-logo-area">
+    <div class="turtle-logo">🐢</div>
+    <h1>느린아이</h1>
+    <p class="login-subtitle">더해서 10이 되는 수를 찾아보세요</p>
+  </div>
+  <div class="login-buttons">
+    <button class="login-btn kakao" onclick="doLogin('kakao')">카카오 로그인</button>
+    <button class="login-btn naver" onclick="doLogin('naver')">네이버 로그인</button>
+    <button class="login-btn google" onclick="doLogin('google')">Google 로그인</button>
+    <button class="login-btn facebook" onclick="doLogin('facebook')">Facebook 로그인</button>
+  </div>
+  <div class="login-divider">또는</div>
+  <div class="login-buttons">
+    <button class="login-btn guest" onclick="doLogin('guest')">게스트로 시작하기</button>
+  </div>
+</div>
+
 <!-- ===== Start View ===== -->
-<div id="start-view">
+<div id="start-view" class="hidden">
   <div class="brand">
-    <img src="https://sprit6487.github.io/slowmath_circle/icon-192.png" alt="느린아이 로고" onerror="this.style.display='none'">
+    <span class="turtle-icon">🐢</span>
     <h1>느린아이</h1>
   </div>
   <p class="brand-sub">보수 연습</p>
@@ -467,7 +551,7 @@
   <div class="mode-card">
     <h2>보수 찾기</h2>
     <p class="desc">숫자만 보고, 더해서 10이 되는 수를 골라요</p>
-    <div class="mode-preview" style="font-size:2.2rem;font-weight:900;color:var(--warm-700);">
+    <div class="mode-preview" style="font-size:2rem;font-weight:900;color:var(--warm-600);">
       ? + ? = 10
     </div>
     <div class="mode-btns">
@@ -479,7 +563,7 @@
   <div class="mode-card">
     <h2>짝 맞추기</h2>
     <p class="desc">더해서 10이 되는 두 수를 찾아 터치하세요</p>
-    <div class="mode-preview" style="font-size:1.5rem;font-weight:700;color:var(--app-blue);">
+    <div class="mode-preview" style="font-size:1.4rem;font-weight:700;color:var(--app-blue);">
       1&nbsp;&nbsp;9&nbsp;&nbsp;→&nbsp;&nbsp;10 ✓
     </div>
     <div class="mode-btns">
@@ -522,10 +606,12 @@
       </div>
     </div>
   </div>
+
+  <button class="logout-btn" onclick="doLogout()">로그아웃</button>
 </div>
 
 <!-- ===== Play View ===== -->
-<div id="play-view">
+<div id="play-view" class="hidden">
   <div class="play-header">
     <button class="back-btn" onclick="goHome()">← 돌아가기</button>
     <span class="play-title" id="play-title"></span>
@@ -538,8 +624,11 @@
 <div class="feedback-float" id="feedback"></div>
 
 <script>
-// ===== State =====
+// ===== Constants =====
 const STORAGE_KEY = 'slowmath_complement_settings';
+const LOGIN_KEY = 'slowmath_complement_login';
+
+// ===== State =====
 let settings = loadSettings();
 let currentMode = '';
 let pairCount = 10;
@@ -548,6 +637,33 @@ let combo = 0;
 let questionNum = 0;
 let locked = false;
 let impulseTimer = null;
+
+// ===== Login =====
+function doLogin(provider) {
+  localStorage.setItem(LOGIN_KEY, provider);
+  showView('start');
+}
+
+function doLogout() {
+  localStorage.removeItem(LOGIN_KEY);
+  showView('login');
+}
+
+function checkLogin() {
+  const provider = localStorage.getItem(LOGIN_KEY);
+  if (provider) {
+    showView('start');
+  } else {
+    showView('login');
+  }
+}
+
+function showView(name) {
+  document.getElementById('login-view').classList.toggle('hidden', name !== 'login');
+  document.getElementById('start-view').classList.toggle('hidden', name !== 'start');
+  document.getElementById('play-view').classList.toggle('hidden', name !== 'play');
+  if (name === 'start') renderSettingsUI();
+}
 
 // ===== Settings =====
 function loadSettings() {
@@ -568,26 +684,22 @@ function saveSettings() {
 
 function toggleTTS() {
   settings.tts = !settings.tts;
-  saveSettings();
-  renderSettingsUI();
+  saveSettings(); renderSettingsUI();
 }
 
 function toggleImpulse() {
   settings.impulse = !settings.impulse;
-  saveSettings();
-  renderSettingsUI();
+  saveSettings(); renderSettingsUI();
 }
 
 function setImpulseMode(mode) {
   settings.impulseMode = mode;
-  saveSettings();
-  renderSettingsUI();
+  saveSettings(); renderSettingsUI();
 }
 
 function setImpulseDelay(sec) {
   settings.impulseDelay = sec;
-  saveSettings();
-  renderSettingsUI();
+  saveSettings(); renderSettingsUI();
 }
 
 function renderSettingsUI() {
@@ -600,12 +712,10 @@ function renderSettingsUI() {
   impEl.classList.toggle('on', settings.impulse);
   detEl.classList.toggle('show', settings.impulse);
 
-  // Impulse mode buttons
   document.querySelectorAll('.impulse-mode-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.mode === settings.impulseMode);
   });
 
-  // Delay buttons (only for lock mode)
   delayRow.classList.toggle('show', settings.impulseMode === 'lock');
   delayRow.innerHTML = '';
   for (let i = 1; i <= 10; i++) {
@@ -630,17 +740,14 @@ function speak(text) {
 // ===== Navigation =====
 function goHome() {
   if (impulseTimer) { clearInterval(impulseTimer); impulseTimer = null; }
-  document.getElementById('start-view').style.display = 'flex';
-  document.getElementById('play-view').style.display = 'none';
-  renderSettingsUI();
+  showView('start');
 }
 
 function startGame(mode, count) {
   currentMode = mode;
   if (count) pairCount = count;
   score = 0; combo = 0; questionNum = 0;
-  document.getElementById('start-view').style.display = 'none';
-  document.getElementById('play-view').style.display = 'flex';
+  showView('play');
 
   const titles = {
     'quiz-circles': '보수 찾기 (원)',
@@ -719,7 +826,6 @@ function nextQuiz() {
 
   speak(`${num}의 보수는 무엇일까요?`);
 
-  // Apply impulse prevention
   const grid = document.getElementById('choices-grid');
   const msgEl = document.getElementById('impulse-msg');
 
@@ -735,7 +841,6 @@ function nextQuiz() {
       });
       grid.after(revealBtn);
     } else {
-      // lock mode
       grid.classList.add('chips-locked');
       grid.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
       let countdown = settings.impulseDelay;
@@ -754,7 +859,6 @@ function nextQuiz() {
     }
   }
 
-  // Choice handlers
   gc.querySelectorAll('.choice-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (locked) return;
@@ -785,7 +889,6 @@ function nextQuiz() {
 
 // ===== Pair Mode =====
 function generatePairs(totalNumbers) {
-  // totalNumbers must be even; each pair sums to 10
   const allPairs = [[1,9],[2,8],[3,7],[4,6],[5,5]];
   const numPairs = totalNumbers / 2;
   const result = [];
@@ -800,7 +903,6 @@ function startPair() {
   const pairs = generatePairs(pairCount);
   const numbers = shuffle(pairs.flat());
 
-  // Grid columns based on count
   let colsClass = '';
   if (pairCount === 20) colsClass = 'cols-5';
   else if (pairCount === 30) colsClass = 'cols-6';
@@ -895,8 +997,8 @@ function startPair() {
   render();
 }
 
-// Init
-renderSettingsUI();
+// ===== Init =====
+checkLogin();
 </script>
 </body>
 </html>
