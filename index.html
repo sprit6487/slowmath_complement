@@ -574,15 +574,50 @@
     <h2>보수 찾기 (원 표시)</h2>
     <p class="desc">숫자와 원을 보고, 더해서 10이 되는 수를 골라요</p>
     <div class="mode-preview">
-      <svg width="220" height="50" viewBox="0 0 220 50">
-        <text x="24" y="32" font-size="26" font-weight="900" fill="#4A4035" text-anchor="middle">3</text>
-        <text x="52" y="30" font-size="16" font-weight="600" fill="#B8AD9E" text-anchor="middle">→</text>
-        <circle cx="80" cy="25" r="9" fill="#6BADE8" opacity="0.6"/>
-        <circle cx="104" cy="25" r="9" fill="#6BADE8" opacity="0.6"/>
-        <circle cx="128" cy="25" r="9" fill="#6BADE8" opacity="0.6"/>
-        <text x="156" y="30" font-size="16" font-weight="600" fill="#B8AD9E" text-anchor="middle">→</text>
-        <rect x="172" y="10" width="38" height="32" rx="8" fill="#D4F5E0" stroke="#5BC886" stroke-width="2"/>
-        <text x="191" y="32" font-size="18" font-weight="900" fill="#5BC886" text-anchor="middle">7</text>
+      <!-- 2x5 grid of circles: 3 filled blue, 7 dashed. Animates between different numbers -->
+      <svg width="160" height="64" viewBox="0 0 160 64">
+        <!-- Row 1: 5 circles -->
+        <circle cx="16" cy="18" r="11" fill="#6BADE8" opacity="0.65">
+          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="44" cy="18" r="11" fill="#6BADE8" opacity="0.65">
+          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="72" cy="18" r="11" fill="#6BADE8" opacity="0.65">
+          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="100" cy="18" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
+          <animate attributeName="fill" values="none;#6BADE8;#6BADE8;none" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;0.65;0.65;0.45" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-dasharray" values="4 3;0 0;0 0;4 3" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#6BADE8;#E0D5C5" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="128" cy="18" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
+          <animate attributeName="fill" values="none;#6BADE8;#6BADE8;none" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;0.65;0.65;0.45" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-dasharray" values="4 3;0 0;0 0;4 3" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#6BADE8;#E0D5C5" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Row 2: 5 circles -->
+        <circle cx="16" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
+          <animate attributeName="fill" values="none;#6BADE8;none;none" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;0.65;0.45;0.45" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-dasharray" values="4 3;0 0;4 3;4 3" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#E0D5C5;#E0D5C5" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="44" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
+          <animate attributeName="fill" values="none;#6BADE8;none;none" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;0.65;0.45;0.45" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke-dasharray" values="4 3;0 0;4 3;4 3" dur="5s" repeatCount="indefinite"/>
+          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#E0D5C5;#E0D5C5" dur="5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="72" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
+        <circle cx="100" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
+        <circle cx="128" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
+        <!-- Animated number overlay - shows which number this represents -->
+        <text x="148" cy="32" font-size="9" fill="#B8AD9E" opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0" dur="5s" repeatCount="indefinite"/>
+        </text>
       </svg>
     </div>
     <div class="mode-btns">
@@ -596,11 +631,26 @@
     <p class="desc">숫자만 보고, 더해서 10이 되는 수를 골라요</p>
     <div class="mode-preview">
       <svg width="200" height="60" viewBox="0 0 200 60">
-        <text x="40" y="40" font-size="28" font-weight="900" fill="#4A4035" text-anchor="middle">4</text>
-        <text x="72" y="38" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">+</text>
-        <text x="104" y="40" font-size="28" font-weight="900" fill="#2E7FD9" text-anchor="middle">?</text>
-        <text x="136" y="38" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">=</text>
-        <text x="168" y="40" font-size="28" font-weight="900" fill="#5BC886" text-anchor="middle">10</text>
+        <!-- Animated number that changes: 4 → 2 → 7 → 4 -->
+        <text x="40" y="42" font-size="30" font-weight="900" fill="#4A4035" text-anchor="middle">
+          4<animate attributeName="textContent" values="4;2;7;4" dur="4.5s" repeatCount="indefinite"/>
+          <set attributeName="textContent" to="4" begin="0s" dur="1.5s"/>
+          <set attributeName="textContent" to="2" begin="1.5s" dur="1.5s"/>
+          <set attributeName="textContent" to="7" begin="3s" dur="1.5s"/>
+        </text>
+        <text x="72" y="40" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">+</text>
+        <!-- ? blinks then becomes the answer -->
+        <text x="104" y="42" font-size="30" font-weight="900" text-anchor="middle" fill="#2E7FD9">
+          ?<animate attributeName="fill" values="#2E7FD9;#2E7FD9;#5BC886;#2E7FD9;#2E7FD9;#5BC886;#2E7FD9;#2E7FD9;#5BC886" dur="4.5s" repeatCount="indefinite"/>
+          <set attributeName="textContent" to="?" begin="0s" dur="0.8s"/>
+          <set attributeName="textContent" to="6" begin="0.8s" dur="0.7s"/>
+          <set attributeName="textContent" to="?" begin="1.5s" dur="0.8s"/>
+          <set attributeName="textContent" to="8" begin="2.3s" dur="0.7s"/>
+          <set attributeName="textContent" to="?" begin="3s" dur="0.8s"/>
+          <set attributeName="textContent" to="3" begin="3.8s" dur="0.7s"/>
+        </text>
+        <text x="136" y="40" font-size="20" font-weight="600" fill="#B8AD9E" text-anchor="middle">=</text>
+        <text x="168" y="42" font-size="30" font-weight="900" fill="#5BC886" text-anchor="middle">10</text>
       </svg>
     </div>
     <div class="mode-btns">
@@ -639,11 +689,6 @@
 
         <rect x="180" y="6" width="38" height="38" rx="9" fill="#fff" stroke="#E8E2DA" stroke-width="1.5"/>
         <text x="199" y="31" font-size="16" font-weight="900" fill="#4A4035" text-anchor="middle">5</text>
-
-        <!-- Checkmark that appears -->
-        <text x="223" y="31" font-size="14" font-weight="700" fill="#5BC886" text-anchor="middle" opacity="0">
-          ✓<animate attributeName="opacity" values="0;0;0;1;1;1;0" dur="4s" repeatCount="indefinite"/>
-        </text>
       </svg>
     </div>
     <div class="mode-btns">
