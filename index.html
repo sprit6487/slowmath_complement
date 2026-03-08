@@ -574,50 +574,33 @@
     <h2>보수 찾기 (원 표시)</h2>
     <p class="desc">숫자와 원을 보고, 더해서 10이 되는 수를 골라요</p>
     <div class="mode-preview">
-      <!-- 2x5 grid of circles: 3 filled blue, 7 dashed. Animates between different numbers -->
+      <!-- 2x5 grid: 3 blue circles pop in, 7 empty dashed circles -->
       <svg width="160" height="64" viewBox="0 0 160 64">
-        <!-- Row 1: 5 circles -->
-        <circle cx="16" cy="18" r="11" fill="#6BADE8" opacity="0.65">
-          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        <!-- Row 1 -->
+        <!-- Blue dot 1 - pop in -->
+        <circle cx="16" cy="18" r="11" fill="#6BADE8" opacity="0">
+          <animate attributeName="opacity" values="0;0;0.7;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="0;0;14;11;11;11;11;0" dur="4s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="44" cy="18" r="11" fill="#6BADE8" opacity="0.65">
-          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        <!-- Blue dot 2 - pop in (delayed) -->
+        <circle cx="44" cy="18" r="11" fill="#6BADE8" opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="0;0;0;14;11;11;11;0" dur="4s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="72" cy="18" r="11" fill="#6BADE8" opacity="0.65">
-          <animate attributeName="opacity" values="0.65;0.65;0.65;0.65" dur="5s" repeatCount="indefinite"/>
+        <!-- Blue dot 3 - pop in (more delayed) -->
+        <circle cx="72" cy="18" r="11" fill="#6BADE8" opacity="0">
+          <animate attributeName="opacity" values="0;0;0;0;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="0;0;0;0;14;11;11;0" dur="4s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="100" cy="18" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
-          <animate attributeName="fill" values="none;#6BADE8;#6BADE8;none" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.45;0.65;0.65;0.45" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-dasharray" values="4 3;0 0;0 0;4 3" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#6BADE8;#E0D5C5" dur="5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="128" cy="18" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
-          <animate attributeName="fill" values="none;#6BADE8;#6BADE8;none" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.45;0.65;0.65;0.45" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-dasharray" values="4 3;0 0;0 0;4 3" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#6BADE8;#E0D5C5" dur="5s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Row 2: 5 circles -->
-        <circle cx="16" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
-          <animate attributeName="fill" values="none;#6BADE8;none;none" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.45;0.65;0.45;0.45" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-dasharray" values="4 3;0 0;4 3;4 3" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#E0D5C5;#E0D5C5" dur="5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="44" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3">
-          <animate attributeName="fill" values="none;#6BADE8;none;none" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.45;0.65;0.45;0.45" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke-dasharray" values="4 3;0 0;4 3;4 3" dur="5s" repeatCount="indefinite"/>
-          <animate attributeName="stroke" values="#E0D5C5;#6BADE8;#E0D5C5;#E0D5C5" dur="5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="72" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
-        <circle cx="100" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
-        <circle cx="128" cy="46" r="11" fill="none" stroke="#E0D5C5" stroke-width="2" stroke-dasharray="4 3" opacity="0.45"/>
-        <!-- Animated number overlay - shows which number this represents -->
-        <text x="148" cy="32" font-size="9" fill="#B8AD9E" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0" dur="5s" repeatCount="indefinite"/>
-        </text>
+        <!-- Empty dashed circles -->
+        <circle cx="100" cy="18" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="128" cy="18" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <!-- Row 2 -->
+        <circle cx="16" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="44" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="72" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="100" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="128" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3"/>
       </svg>
     </div>
     <div class="mode-btns">
