@@ -142,20 +142,17 @@
     display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
   }
   .start-btn {
-    width: 100%;
-    padding: 16px 0;
-    border: none;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #F0A050, #F07070);
-    font-size: 1.1rem; font-weight: 700;
-    color: #fff;
+    padding: 10px 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px; background: #fff;
+    font-size: 0.875rem; font-weight: 700;
+    color: var(--warm-600);
     cursor: pointer; font-family: inherit;
-    box-shadow: 0 4px 16px rgba(240,112,112,.3);
-    transition: transform .1s, box-shadow .1s;
+    transition: all 0.12s;
   }
   .start-btn:hover, .start-btn:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 8px rgba(240,112,112,.4);
+    background: var(--app-blue-soft);
+    border-color: var(--app-blue); color: var(--app-blue);
   }
 
   /* ===== Settings Panel ===== */
