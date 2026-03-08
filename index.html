@@ -93,11 +93,6 @@
   .login-divider::before, .login-divider::after {
     content: ''; flex: 1; height: 1px; background: var(--warm-300);
   }
-  .login-btn.guest {
-    background: none; border: 1.5px solid var(--border);
-    color: var(--warm-500); font-weight: 500;
-  }
-
   /* ===== Start View ===== */
   #start-view {
     width: 100%; display: flex;
@@ -534,7 +529,6 @@
   </div>
   <div class="login-divider">또는</div>
   <div class="login-buttons">
-    <button class="login-btn guest" onclick="doLogin('guest')">게스트로 시작하기</button>
   </div>
 </div>
 
@@ -682,7 +676,6 @@
     <div class="mode-btns">
       <button class="start-btn" onclick="startGame('pair',10)">10개 짝 맞추기</button>
       <button class="start-btn" onclick="startGame('pair',20)">20개 짝 맞추기</button>
-      <button class="start-btn" onclick="startGame('pair',30)">30개 짝 맞추기</button>
     </div>
   </div>
 
@@ -757,6 +750,7 @@ let pairCount = 10;
 let score = 0;
 let combo = 0;
 let questionNum = 0;
+let quizNumbers = [];
 let locked = false;
 let impulseTimer = null;
 
@@ -865,6 +859,9 @@ function startGame(mode, count) {
   currentMode = mode;
   if (count) pairCount = count;
   score = 0; combo = 0; questionNum = 0;
+  if (mode.startsWith('quiz')) {
+    quizNumbers = shuffle([1,2,3,4,5,6,7,8,9]);
+  }
   showView('play');
 
   const titles = {
@@ -908,7 +905,24 @@ function nextQuiz() {
   locked = false;
   if (impulseTimer) { clearInterval(impulseTimer); impulseTimer = null; }
 
-  const num = Math.floor(Math.random() * 9) + 1;
+  if (questionNum > 9) {
+    const gc = document.getElementById('game-container');
+    gc.innerHTML = `
+      <div class="complete-overlay" style="position:relative;margin-top:40px;">
+        <div class="complete-emoji">🏆</div>
+        <div class="complete-msg">9문제 완료!</div>
+        <div class="complete-sub">${score}점</div>
+        <button class="next-btn" id="quiz-retry">다시 하기</button>
+        <button class="next-btn" id="quiz-home" style="margin-top:8px;background:var(--warm-200);color:var(--warm-700);">홈으로</button>
+      </div>
+    `;
+    speak('모두 풀었어요! 잘했어요!');
+    document.getElementById('quiz-retry').addEventListener('click', () => startGame(currentMode));
+    document.getElementById('quiz-home').addEventListener('click', goHome);
+    return;
+  }
+
+  const num = quizNumbers[questionNum - 1];
   const answer = 10 - num;
   const showCircles = currentMode === 'quiz-circles';
 
@@ -929,7 +943,7 @@ function nextQuiz() {
   }
 
   gc.innerHTML = `
-    <div class="question-label">이 수의 보수는? (문제 ${questionNum})</div>
+    <div class="question-label">이 수의 보수는? (문제 ${questionNum}/9)</div>
     <div class="question-number">${num}</div>
     ${circlesHTML}
     <div class="choices-grid" id="choices-grid">
