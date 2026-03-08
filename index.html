@@ -574,46 +574,37 @@
     <h2>보수 찾기 (원 표시)</h2>
     <p class="desc">숫자와 원을 보고, 더해서 10이 되는 수를 골라요</p>
     <div class="mode-preview">
-      <!-- 2x5 grid: 3 blue circles pop in, 7 empty dashed circles -->
+      <!-- 2x5 grid: 3 blue circles static, 7 dashed circles pop in -->
       <svg width="160" height="64" viewBox="0 0 160 64">
         <!-- Row 1 -->
-        <!-- Blue dot 1 - pop in -->
-        <circle cx="16" cy="18" r="11" fill="#6BADE8" opacity="0">
-          <animate attributeName="opacity" values="0;0;0.7;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
-          <animate attributeName="r" values="0;0;14;11;11;11;11;0" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Blue dot 2 - pop in (delayed) -->
-        <circle cx="44" cy="18" r="11" fill="#6BADE8" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
-          <animate attributeName="r" values="0;0;0;14;11;11;11;0" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Blue dot 3 - pop in (more delayed) -->
-        <circle cx="72" cy="18" r="11" fill="#6BADE8" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
-          <animate attributeName="r" values="0;0;0;0;14;11;11;0" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Empty dashed circles - appear AFTER blue circles -->
+        <!-- Blue dot 1 - always visible -->
+        <circle cx="16" cy="18" r="11" fill="#6BADE8" opacity="0.7"/>
+        <!-- Blue dot 2 - always visible -->
+        <circle cx="44" cy="18" r="11" fill="#6BADE8" opacity="0.7"/>
+        <!-- Blue dot 3 - always visible -->
+        <circle cx="72" cy="18" r="11" fill="#6BADE8" opacity="0.7"/>
+        <!-- Empty dashed circles - all appear at once -->
         <circle cx="100" cy="18" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <circle cx="128" cy="18" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <!-- Row 2 -->
         <circle cx="16" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <circle cx="44" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <circle cx="72" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <circle cx="100" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
         <circle cx="128" cy="46" r="11" fill="none" stroke="#D5CDC2" stroke-width="2" stroke-dasharray="4 3" opacity="0">
-          <animate attributeName="opacity" values="0;0;0;0;0;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;0;0.7;0.7;0.7;0.7;0" dur="4s" repeatCount="indefinite"/>
         </circle>
       </svg>
     </div>
@@ -689,9 +680,9 @@
       </svg>
     </div>
     <div class="mode-btns">
-      <button class="start-btn" onclick="startGame('pair',10)">10개</button>
-      <button class="start-btn" onclick="startGame('pair',20)">20개</button>
-      <button class="start-btn" onclick="startGame('pair',30)">30개</button>
+      <button class="start-btn" onclick="startGame('pair',10)">10개 짝 맞추기</button>
+      <button class="start-btn" onclick="startGame('pair',20)">20개 짝 맞추기</button>
+      <button class="start-btn" onclick="startGame('pair',30)">30개 짝 맞추기</button>
     </div>
   </div>
 
