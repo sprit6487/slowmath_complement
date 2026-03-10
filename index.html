@@ -474,6 +474,25 @@
   }
 
   /* ===== Tablet & Desktop ===== */
+  /* ===== Wrong Notes ===== */
+  .wrong-notes-btn { width: 100%; padding: 14px 0; border-radius: 14px; border: 2.5px solid #F07070; background: #FFF5F5; color: #F07070; font-family: 'Noto Sans KR', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 10px; transition: transform .1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .wrong-notes-btn:active { transform: scale(.97); }
+  .wrong-notes-btn .badge { background: #F07070; color: white; border-radius: 50%; min-width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; }
+  .wn-view { display: none; flex-direction: column; align-items: center; padding: 24px 20px; }
+  .wn-view.active { display: flex; }
+  .wn-header { text-align: center; margin-bottom: 20px; }
+  .wn-header h2 { font-size: 1.25rem; font-weight: 900; color: #4A4035; margin: 0 0 4px; }
+  .wn-header p { font-size: .85rem; color: #B8AD9E; margin: 0; }
+  .wn-list { width: 100%; max-width: 400px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
+  .wn-chip { padding: 8px 16px; border-radius: 10px; background: #FFF5F5; border: 1.5px solid #F07070; font-size: .9rem; font-weight: 700; color: #F07070; }
+  .wn-empty { color: #B8AD9E; font-size: .9rem; margin: 40px 0; }
+  .wn-actions { display: flex; gap: 10px; width: 100%; max-width: 320px; }
+  .wn-actions button { flex: 1; padding: 13px 0; border-radius: 12px; font-family: 'Noto Sans KR', sans-serif; font-size: .9rem; font-weight: 700; cursor: pointer; transition: transform .1s; }
+  .wn-actions button:active { transform: scale(.97); }
+  .wn-btn-back { border: 2.5px solid #E8E2DA; background: white; color: #8C8070; }
+  .wn-btn-start { border: none; background: #F07070; color: white; box-shadow: 0 2px 8px rgba(240,112,112,.3); }
+  .wn-btn-clear { border: 1.5px solid #E8E2DA; background: white; color: #B8AD9E; padding: 8px 16px; border-radius: 8px; font-size: .75rem; font-weight: 600; cursor: pointer; margin-top: 12px; font-family: 'Noto Sans KR', sans-serif; }
+
   @media (min-width: 768px) {
     body { align-items: center; padding: 32px; }
     .app {
@@ -694,6 +713,11 @@
     </div>
   </div>
 
+  <!-- Wrong Notes Button -->
+  <button class="wrong-notes-btn" id="wrong-notes-btn" onclick="showWrongNotes()" style="display:none;">
+    오답노트 <span class="badge" id="wn-badge">0</span>
+  </button>
+
   <!-- Settings -->
   <div class="settings-section">
     <div class="setting-divider">
@@ -736,6 +760,20 @@
   </div>
 
   <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+</div>
+
+<!-- ===== Wrong Notes View ===== -->
+<div id="wn-view" class="wn-view">
+  <div class="wn-header">
+    <h2>오답노트</h2>
+    <p>틀렸던 문제를 다시 연습해요</p>
+  </div>
+  <div class="wn-list" id="wn-list"></div>
+  <div class="wn-actions">
+    <button class="wn-btn-back" onclick="showView('start')">돌아가기</button>
+    <button class="wn-btn-start" id="wn-start-btn" onclick="startWrongNotesPractice()">다시 풀기</button>
+  </div>
+  <button class="wn-btn-clear" id="wn-clear-btn" onclick="clearWrongNotes()">오답노트 비우기</button>
 </div>
 
 <!-- ===== Play View ===== -->
@@ -794,7 +832,10 @@ function showView(name) {
   document.getElementById('login-view').classList.toggle('hidden', name !== 'login');
   document.getElementById('start-view').classList.toggle('hidden', name !== 'start');
   document.getElementById('play-view').classList.toggle('hidden', name !== 'play');
-  if (name === 'start') renderSettingsUI();
+  const wnView = document.getElementById('wn-view');
+  wnView.classList.toggle('active', name === 'wn');
+  if (name !== 'wn') wnView.classList.remove('active');
+  if (name === 'start') { renderSettingsUI(); updateWrongNotesBadge(); }
 }
 
 // ===== Settings =====
@@ -872,11 +913,13 @@ function speak(text) {
 // ===== Navigation =====
 function goHome() {
   if (impulseTimer) { clearInterval(impulseTimer); impulseTimer = null; }
+  isWrongNotesPractice = false;
   showView('start');
 }
 
 function startGame(mode, count) {
   currentMode = mode;
+  isWrongNotesPractice = false;
   if (count) pairCount = count;
   score = 0; combo = 0; questionNum = 0;
   if (mode.startsWith('quiz')) {
@@ -900,10 +943,11 @@ function updateProgress() {
   const label = document.getElementById('play-progress-label');
   const fill = document.getElementById('play-progress-fill');
   if (currentMode.startsWith('quiz')) {
-    const current = Math.min(questionNum, 9);
-    label.textContent = `${current} / 9`;
-    fill.style.width = `${(current / 9) * 100}%`;
-    const ratio = current / 9;
+    const totalQ = quizNumbers.length;
+    const current = Math.min(questionNum, totalQ);
+    label.textContent = `${current} / ${totalQ}`;
+    fill.style.width = `${(current / totalQ) * 100}%`;
+    const ratio = current / totalQ;
     if (ratio <= 0.33) fill.style.background = 'var(--app-red)';
     else if (ratio <= 0.66) fill.style.background = 'var(--app-orange)';
     else fill.style.background = 'var(--app-green)';
@@ -936,19 +980,24 @@ function nextQuiz() {
   locked = false;
   if (impulseTimer) { clearInterval(impulseTimer); impulseTimer = null; }
 
-  if (questionNum > 9) {
+  const totalQ = quizNumbers.length;
+  if (questionNum > totalQ) {
     const gc = document.getElementById('game-container');
+    const label = isWrongNotesPractice ? `오답 ${totalQ}문제 완료!` : '9문제 완료!';
     gc.innerHTML = `
       <div class="complete-overlay" style="position:relative;margin-top:40px;">
         <div class="complete-emoji">🏆</div>
-        <div class="complete-msg">9문제 완료!</div>
+        <div class="complete-msg">${label}</div>
         <div class="complete-sub">${score}점</div>
         <button class="next-btn" id="quiz-retry">다시 하기</button>
         <button class="next-btn" id="quiz-home" style="margin-top:8px;background:var(--warm-200);color:var(--warm-700);">홈으로</button>
       </div>
     `;
     speak('모두 풀었어요! 잘했어요!');
-    document.getElementById('quiz-retry').addEventListener('click', () => startGame(currentMode));
+    document.getElementById('quiz-retry').addEventListener('click', () => {
+      if (isWrongNotesPractice) startWrongNotesPractice();
+      else startGame(currentMode);
+    });
     document.getElementById('quiz-home').addEventListener('click', goHome);
     return;
   }
@@ -1032,11 +1081,13 @@ function nextQuiz() {
         score += 10 + (combo > 1 ? combo * 2 : 0);
         showFeedback('🎉');
         speak('정답이에요!');
+        if (isWrongNotesPractice) removeWrongNote(num);
         updateScoreUI();
         setTimeout(() => nextQuiz(), 900);
       } else {
         btn.classList.add('wrong');
         combo = 0;
+        if (!isWrongNotesPractice) addWrongNote(num);
         showFeedback('😢');
         speak('다시 해봐요.');
         gc.querySelectorAll('.choice-btn').forEach(b => {
@@ -1148,6 +1199,8 @@ function startPair() {
           } else {
             locked = true;
             combo = 0;
+            addWrongNote(a);
+            addWrongNote(b);
             cell.classList.add('wrong-pair');
             const prevCell = gc.querySelector(`[data-idx="${selected}"]`);
             if (prevCell) prevCell.classList.add('wrong-pair');
@@ -1166,6 +1219,89 @@ function startPair() {
   }
 
   render();
+}
+
+// ===== Wrong Notes =====
+const WN_KEY = 'slowmath_complement_wrong_notes';
+let isWrongNotesPractice = false;
+
+function getWrongNotes() {
+  try {
+    return JSON.parse(localStorage.getItem(WN_KEY)) || [];
+  } catch { return []; }
+}
+
+function saveWrongNotes(notes) {
+  localStorage.setItem(WN_KEY, JSON.stringify(notes));
+}
+
+function addWrongNote(num) {
+  const notes = getWrongNotes();
+  if (!notes.some(n => n.num === num)) {
+    notes.push({ num });
+    saveWrongNotes(notes);
+  }
+}
+
+function removeWrongNote(num) {
+  const notes = getWrongNotes().filter(n => n.num !== num);
+  saveWrongNotes(notes);
+}
+
+function clearWrongNotes() {
+  saveWrongNotes([]);
+  renderWrongNotesList();
+  updateWrongNotesBadge();
+}
+
+function updateWrongNotesBadge() {
+  const notes = getWrongNotes();
+  const btn = document.getElementById('wrong-notes-btn');
+  const badge = document.getElementById('wn-badge');
+  if (notes.length > 0) {
+    btn.style.display = 'flex';
+    badge.textContent = notes.length;
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+function showWrongNotes() {
+  showView('wn');
+  renderWrongNotesList();
+}
+
+function renderWrongNotesList() {
+  const notes = getWrongNotes();
+  const list = document.getElementById('wn-list');
+  const startBtn = document.getElementById('wn-start-btn');
+  const clearBtn = document.getElementById('wn-clear-btn');
+
+  if (notes.length === 0) {
+    list.innerHTML = '<div class="wn-empty">틀린 문제가 없어요!</div>';
+    startBtn.disabled = true;
+    startBtn.style.opacity = '0.4';
+    clearBtn.style.display = 'none';
+  } else {
+    list.innerHTML = notes.map(n =>
+      `<span class="wn-chip">${n.num} + ? = 10</span>`
+    ).join('');
+    startBtn.disabled = false;
+    startBtn.style.opacity = '1';
+    clearBtn.style.display = '';
+  }
+}
+
+function startWrongNotesPractice() {
+  const notes = getWrongNotes();
+  if (notes.length === 0) return;
+  isWrongNotesPractice = true;
+  currentMode = 'quiz-plain';
+  score = 0; combo = 0; questionNum = 0;
+  quizNumbers = shuffle(notes.map(n => n.num));
+  showView('play');
+  updateScoreUI();
+  nextQuiz();
 }
 
 // ===== Init =====
