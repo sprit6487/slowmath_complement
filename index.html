@@ -991,6 +991,7 @@ function nextQuiz() {
         <div class="complete-sub">${score}점</div>
         <button class="next-btn" id="quiz-retry">다시 하기</button>
         <button class="next-btn" id="quiz-home" style="margin-top:8px;background:var(--warm-200);color:var(--warm-700);">홈으로</button>
+        <button class="next-btn" id="quiz-share" style="margin-top:8px;background:white;color:#8C8070;border:2px solid #E8E2DA;">📤 공유하기</button>
       </div>
     `;
     speak('모두 풀었어요! 잘했어요!');
@@ -999,6 +1000,7 @@ function nextQuiz() {
       else startGame(currentMode);
     });
     document.getElementById('quiz-home').addEventListener('click', goHome);
+    document.getElementById('quiz-share').addEventListener('click', shareApp);
     return;
   }
 
@@ -1302,6 +1304,21 @@ function startWrongNotesPractice() {
   showView('play');
   updateScoreUI();
   nextQuiz();
+}
+
+function shareApp() {
+    const title = document.title;
+    const url = window.location.href;
+    const text = title + ' - 아이와 함께 연습해보세요!';
+    if (navigator.share) {
+        navigator.share({ title: title, text: text, url: url }).catch(function(){});
+    } else {
+        navigator.clipboard.writeText(url).then(function() {
+            alert('링크가 복사되었습니다!');
+        }).catch(function() {
+            prompt('링크를 복사하세요:', url);
+        });
+    }
 }
 
 // ===== Init =====
