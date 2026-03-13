@@ -213,11 +213,11 @@
 
   /* Delay buttons */
   .delay-row {
-    display: none; gap: 4px;
+    display: none; flex-wrap: wrap; gap: 4px; justify-content: center;
   }
   .delay-row.show { display: flex; }
   .imp-sec {
-    flex: 1; padding: 8px 0;
+    flex: 0 0 calc((100% - 16px) / 5); padding: 8px 0;
     font-size: 0.75rem; font-weight: 600;
     border-radius: 10px; border: 2px solid var(--border);
     background: #fff; color: #8C8070;
