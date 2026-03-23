@@ -895,6 +895,7 @@ let pairCount = 10;
 let score = 0;
 let combo = 0;
 let questionNum = 0;
+let correctCount = 0;
 let quizNumbers = [];
 let locked = false;
 let impulseTimer = null;
@@ -1009,11 +1010,12 @@ function startGame(mode, count) {
     currentMode = mode;
   isWrongNotesPractice = false;
   if (count) pairCount = count;
-  score = 0; combo = 0; questionNum = 0;
+  score = 0; combo = 0; questionNum = 0; correctCount = 0;
   if (mode.startsWith('quiz')) {
     quizNumbers = shuffle([1,2,3,4,5,6,7,8,9]);
   }
   showView('play');
+  document.getElementById('play-score').style.visibility = mode.startsWith('quiz') ? '' : 'hidden';
 
   updateScoreUI();
 
@@ -1022,7 +1024,8 @@ function startGame(mode, count) {
 }
 
 function updateScoreUI() {
-  document.getElementById('play-score').textContent = score + '점';
+  const totalQ = quizNumbers.length || 0;
+  document.getElementById('play-score').textContent = correctCount + '/' + totalQ + ' 정답';
   document.getElementById('combo-badge').textContent = combo > 1 ? combo + '연속 정답!' : '';
   updateProgress();
 }
@@ -1167,6 +1170,7 @@ function nextQuiz() {
       if (val === answer) {
         btn.classList.add('correct');
         combo++;
+        correctCount++;
         score += 10 + (combo > 1 ? combo * 2 : 0);
         showFeedback('🎉');
         speak('정답이에요!');
@@ -1391,7 +1395,7 @@ function startWrongNotesPractice() {
   if (notes.length === 0) return;
   isWrongNotesPractice = true;
   currentMode = 'quiz-plain';
-  score = 0; combo = 0; questionNum = 0;
+  score = 0; combo = 0; questionNum = 0; correctCount = 0;
   quizNumbers = shuffle(notes.map(n => n.num));
   showView('play');
   updateScoreUI();
