@@ -1078,9 +1078,9 @@ function nextQuiz() {
     const label = isWrongNotesPractice ? `오답 ${totalQ}문제 완료!` : '9문제 완료!';
     gc.innerHTML = `
       <div class="complete-overlay" style="position:relative;margin-top:40px;">
-        <div class="complete-emoji">🏆</div>
+        <div class="complete-emoji">${correctCount === totalQ ? '🏆' : '👏'}</div>
         <div class="complete-msg">${label}</div>
-        <div class="complete-sub">${score}점</div>
+        <div class="complete-sub">${totalQ}문제 중 ${correctCount}개 정답</div>
         <button class="next-btn" id="quiz-retry">다시 하기</button>
         <button class="next-btn" id="quiz-home" style="margin-top:8px;background:var(--warm-200);color:var(--warm-700);">홈으로</button>
       </div>
@@ -1256,8 +1256,9 @@ function startPair() {
           <div class="complete-overlay">
             <div class="complete-emoji">🏆</div>
             <div class="complete-msg">모두 찾았어요!</div>
-            <div class="complete-sub"></div>
+            <div class="complete-sub">${totalPairs}쌍 완성!</div>
             <button class="next-btn" id="pair-next">다시 하기</button>
+            <button class="next-btn" id="pair-home" style="margin-top:8px;background:var(--warm-200);color:var(--warm-700);">홈으로</button>
           </div>
         `;
         document.getElementById('pair-next').addEventListener('click', () => {
@@ -1265,6 +1266,7 @@ function startPair() {
           updateScoreUI();
           startPair();
         });
+        document.getElementById('pair-home').addEventListener('click', goHome);
       }, 500);
       return;
     }
