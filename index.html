@@ -903,6 +903,7 @@ let impulseTimer = null;
 // ===== Login =====
 function doLogin(provider) {
   localStorage.setItem(LOGIN_KEY, provider);
+  const _sp=sessionStorage.getItem('_sp');if(_sp){sessionStorage.removeItem('_sp');startGame(...JSON.parse(_sp));return;}
   showView('start');
 }
 
@@ -1006,7 +1007,7 @@ function goHome() {
 }
 
 function startGame(mode, count) {
-  if (!localStorage.getItem('slowmath_complement_login')) { showView('login'); return; }
+  if (!localStorage.getItem('slowmath_complement_login')) { sessionStorage.setItem('_sp',JSON.stringify([mode,count])); showView('login'); return; }
     currentMode = mode;
   isWrongNotesPractice = false;
   if (count) pairCount = count;
