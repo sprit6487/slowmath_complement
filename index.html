@@ -946,12 +946,12 @@ function doLogin(provider) {
 
 function doLogout() {
   localStorage.removeItem(LOGIN_KEY);
-  showView('login');
+  showView('start');
 }
 
 function checkLogin() {
   const provider = localStorage.getItem(LOGIN_KEY);
-  showView(provider ? 'start' : 'login');
+  showView('start');
 }
 
 function showView(name) {
